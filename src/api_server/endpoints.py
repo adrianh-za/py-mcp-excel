@@ -4,6 +4,7 @@ from lib_excel.reader import (
     get_columns_with_types,
     get_sheet_count,
     get_sheet_names,
+    read_sheet,
 )
 
 from .responses import (
@@ -47,6 +48,14 @@ async def read_columns(path: str, sheet: str, header_row: int = 0) -> list[Colum
     try:
         cols = get_columns_with_types(path, sheet, header_row=header_row)
         return [ColumnTypeResponse(name=col.name, type=col.type) for col in cols]
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@api_router.get("/sheet-data", summary="Read sheet rows", tags=["Reader"])
+async def read_sheet_data(path: str, sheet: str, rows_to_read: int = 10, header_row: int = 0) -> list[list[object]]:
+    try:
+        return read_sheet(path, sheet, rows_to_read=rows_to_read, header_row=header_row)
     except Exception as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
 

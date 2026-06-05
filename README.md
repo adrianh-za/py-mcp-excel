@@ -53,19 +53,17 @@ uv pip install -e .
 Start the FastAPI server:
 
 ```bash
-PYTHONPATH=src python -m api_server.endpoints
+PYTHONPATH=src uvicorn api_server.endpoints:app --host 127.0.0.1 --port 5251 --reload
+```
+
+```powershell
+$env:PYTHONPATH='src'; .\.venv\Scripts\python.exe -m uvicorn api_server.endpoints:app --host 127.0.0.1 --port 5251 --reload
 ```
 
 The API will be available at:
-- **Swagger UI**: `http://localhost:8000/api/excel/swagger`
-- **OpenAPI JSON**: `http://localhost:8000/api/excel/openapi.json`
-- **ReDoc**: `http://localhost:8000/api/excel/openapi`
-
-**Note**: You can customize the server using standard Uvicorn arguments:
-
-```bash
-PYTHONPATH=src uvicorn api_server.endpoints:app --host 127.0.0.1 --port 8000 --reload
-```
+- **Swagger UI**: `http://localhost:5251/api/excel/swagger`
+- **OpenAPI JSON**: `http://localhost:5251/api/excel/openapi.json`
+- **ReDoc**: `http://localhost:5251/api/excel/openapi`
 
 ### MCP Server
 

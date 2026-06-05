@@ -26,3 +26,8 @@ def get_columns(path: str, sheet: str, header_row: int = 0) -> list[str]:
 def get_columns_with_types(path: str, sheet: str, header_row: int = 0) -> list[ColumnType]:
     df = pd.read_excel(path, sheet_name=sheet, header=header_row)  # pyright: ignore[reportUnknownMemberType]
     return [ColumnType(name=str(column), type=str(dtype)) for column, dtype in df.dtypes.items()]
+
+
+def read_sheet(path: str, sheet: str, rows_to_read: int = 10, header_row: int = 0) -> list[list[object]]:
+    df = pd.read_excel(path, sheet_name=sheet, header=header_row, nrows=rows_to_read)  # pyright: ignore[reportUnknownMemberType]
+    return df.values.tolist()
