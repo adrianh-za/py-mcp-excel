@@ -1,6 +1,6 @@
 # Excel MCP and FastAPI Server
 
-A Python project that exposes Excel file information via the Model Context Protocol (MCP) and a FastAPI REST API. It allows reading Excel spreadsheets to extract sheet names, sheet counts, and column information with data types.
+A Python project that exposes Excel file information via the Model Context Protocol (MCP) and a FastAPI REST API. It allows reading Excel spreadsheets to extract sheet names, sheet counts, column information with data types, and sheet row data.
 The point of the API is for easier testing, while the MCP server is the main focus for integration with MCP-compatible tools and agents.
 
 ## Features
@@ -16,6 +16,7 @@ The point of the API is for easier testing, while the MCP server is the main foc
 | Get sheet names | `read_sheet_names(path)` | `GET /api/excel/sheet-names?path={path}` | Returns list of sheet names in an Excel file |
 | Get sheet count | `read_sheet_count(path)` | `GET /api/excel/sheet-count?path={path}` | Returns the number of sheets in an Excel file |
 | Get columns with types | `read_columns(path, sheet, header_row=0)` | `GET /api/excel/columns?path={path}&sheet={sheet}&header_row={header_row}` | Returns column names and their data types from a specific sheet |
+| Read sheet rows | `read_sheet_data(path, sheet, rows_to_read=10, header_row=0)` | `GET /api/excel/sheet-data?path={path}&sheet={sheet}&rows_to_read={rows_to_read}&header_row={header_row}` | Returns row data from a specific sheet as a list of value arrays |
 
 ## Prerequisites
 
@@ -135,4 +136,7 @@ curl "http://localhost:8000/api/excel/columns?path=/path/to/file.xlsx&sheet=Shee
 
 # Get columns with custom header row
 curl "http://localhost:8000/api/excel/columns?path=/path/to/file.xlsx&sheet=Sheet1&header_row=2"
+
+# Read rows from a specific sheet
+curl "http://localhost:8000/api/excel/sheet-data?path=/path/to/file.xlsx&sheet=Sheet1&rows_to_read=10&header_row=0"
 ```
